@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <h3>Upload a product image</h3>
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+      <input class="form-control mb-2" type="file" name="image" accept="image/*" required>
+      <button class="btn btn-primary">Upload & Find Deals</button>
+    </form>
+  </div>
+
+  <div class="col-md-6 text-end">
+    <h5>Welcome, {{ session.get('user_name') }}</h5>
+    <p class="text-muted">Upload an image to get started.</p>
+  </div>
+</div>
+
+{% if filename and product %}
+  <hr>
+  <div class="card p-3">
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <img src="{{ url_for('static', filename='uploads/' + filename) }}" class="img-fluid rounded" alt="uploaded">
+      </div>
+      <div class="col-md-8">
+        <h4>{{ product.name }}</h4>
+        <p>{{ product.description }}</p>
+        <h6>Specifications</h6>
+        <ul>
+          {% for s in product.specs %}
+            <li>{{ s }}</li>
+          {% endfor %}
+        </ul>
+
+        <div class="row">
+          {% for store in product.stores %}
+            <div class="col-md-4 mb-2">
+              {% include 'product_card.html' %}
+            </div>
+          {% endfor %}
+        </div>
+
+        <p class="mt-2"><strong>Lowest:</strong> <span class="text-success">{{ product.lowest.store }} — {{ product.lowest.price }}</span></p>
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}
