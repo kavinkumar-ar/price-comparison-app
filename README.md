@@ -6,6 +6,7 @@
    source venv/bin/activate
 
 2. Install requirements (skip torch if you will not use CLIP):
+   
    pip install -r requirements.txt
    # For torch: follow install instructions at pytorch.org to pick the right wheel for your OS/GPU.
 
